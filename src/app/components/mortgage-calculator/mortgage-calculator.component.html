@@ -1,0 +1,68 @@
+<div class="container justify-content-center">
+  <div class="text-center mb-4">
+    <h2>Advanced Mortgage Calculator</h2>
+  </div>
+
+  <mat-card>
+    <form [formGroup]="mortgageForm" (ngSubmit)="monthlyPaymentCalc(mortgageForm)" class="mx-auto">
+
+      <mat-card-content>
+        <label for="loanAmount">Loan Amount: </label>
+        <input formControlName="loanAmount" [textMask]="{mask: dollarMask}" type="text" name="loanAmount" id="loanAmount" class="form-control px-1" placeholder="Loan Amount">
+        <mat-error *ngIf="mortgageCalcSubmitted && mortgageF.loanAmount.invalid">Loan Amount is required.</mat-error>
+      </mat-card-content>
+
+      <mat-card-content>
+        <label for="loanInterest">Interest Percentage: </label>
+        <input formControlName="interestPercent" [textMask]="{mask: percentMask}" type="text" name="loanInterest" id="loanInterest" class="form-control px-1" placeholder="Interest Percent" trim="blur">
+        <mat-error *ngIf="mortgageCalcSubmitted && mortgageF.interestPercent.invalid">Loan Amount is required.</mat-error>
+      </mat-card-content>
+
+      <mat-card-content>
+        <label for="loanRepaymentYears">Pay Period (years): </label>
+        <input formControlName="repaymentInYears" [textMask]="{mask: integerMask}" type="text" name="loanRepaymentYears" id="loanRepaymentYears" class="form-control px-1" placeholder="Years for Repayment" trim="blur">
+        <mat-error *ngIf="mortgageCalcSubmitted && mortgageF.repaymentInYears.invalid">Loan Amount is required.</mat-error>
+      </mat-card-content>
+
+      <div class="row">
+        <div class="col-3">
+          <button type="submit" class="btn btn-success"><span>Calculate Mortgage</span></button>
+        </div>
+        <div class="col-auto" *ngIf="totalPayment && monthlyPayment">
+          <h2>Monthly Payment:<span class="text-danger"> ${{ this.monthlyPayment }}</span></h2>
+          <h2>Total Payment:<span class="text-danger"> ${{ this.totalPayment }}</span></h2>
+        </div>
+        <div class="col-auto" *ngIf="totalPayment && monthlyPayment">
+          <h2>Loan Amount:<span class="text-primary"> ${{ this.loanAmount }}</span></h2>
+          <h2>Interest Percentage:<span class="text-primary"> {{ this.interestPercent }}%</span></h2>
+          <h2>Repayment Period:<span class="text-primary"> {{ this.repaymentInYears }} Years</span></h2>
+        </div>
+      </div>
+
+    </form>
+  </mat-card>
+
+<!--  <form [formGroup]="mortgageForm" (ngSubmit)="monthlyPaymentCalc(mortgageForm)" class="pb-3 mx-auto">-->
+<!--    <div class="mb-3">-->
+<!--      <label for="loanAmount">Loan Amount: </label>-->
+<!--      <input formControlName="loanAmount" [textMask]="{mask: dollarMask}" type="text" id="loanAmount" class="form-control px-1" placeholder="Loan Amount">-->
+<!--    </div>-->
+
+<!--    <div class="mb-3">-->
+<!--      <label for="loanInterest">Interest Percentage: </label>-->
+<!--      <input formControlName="interestPercent" [textMask]="{mask: percentMask}" type="text" id="loanInterest" class="form-control px-1" placeholder="Interest Percent" trim="blur">-->
+<!--    </div>-->
+
+<!--    <div class="mb-3">-->
+<!--      <label for="loanRepaymentYears">Pay Period (years): </label>-->
+<!--      <input formControlName="repaymentInYears" [textMask]="{mask: integerMask}" type="text" id="loanRepaymentYears" class="form-control px-1" placeholder="Years for Repayment" trim="blur">-->
+<!--    </div>-->
+
+<!--    <div *ngIf="totalPayment && monthlyPayment" class="text-center">-->
+<!--      <h2><span>Monthly Payment:</span> ${{ this.monthlyPayment }}</h2>-->
+<!--      <h2><span>Total Payment:</span> ${{ this.totalPayment }}</h2>-->
+<!--    </div>-->
+
+<!--    <button type="submit" class="btn btn-success mt-4"><span>Calculate Mortgage</span></button>-->
+<!--  </form>-->
+</div>
