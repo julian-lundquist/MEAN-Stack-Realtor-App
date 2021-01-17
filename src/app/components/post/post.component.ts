@@ -17,20 +17,20 @@ export class PostComponent implements OnInit {
   constructor(private postService: PostService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe(data => {
-      this.posts = data.posts;
-      console.log(this.posts);
-    });
-
     this.postForm = this.formBuilder.group({
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required])
-    })
+    });
+
+    this.postService.getPosts().subscribe(posts => {
+      this.posts = posts;
+      console.log(this.posts);
+    });
   }
 
   get postF() { return this.postForm.controls; }
 
-  public addPost() {
+  addPost() {
     this.postFormSubmitted = true;
 
     // stop here if form is invalid
@@ -39,12 +39,15 @@ export class PostComponent implements OnInit {
     }
 
     this.postService.addPost(this.postForm.value).subscribe(() => {
+      this.postFormSubmitted = false;
       this.postForm.reset();
     });
+  }
 
-    // console.log(this.postForm.value);
-    // this.postForm.reset();
-    // console.log(this.postForm.value);
+  onDelete(postId: string) {
+    this.postService.deletePost(postId).subscribe(data => {
+      console.log(data);
+    });
   }
 
 }
