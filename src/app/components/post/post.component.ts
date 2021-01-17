@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {PostService} from '../../shared/services/post.service';
 import {Post} from '../../shared/classes/post';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-post',
@@ -38,15 +39,21 @@ export class PostComponent implements OnInit {
       return;
     }
 
-    this.postService.addPost(this.postForm.value).subscribe(() => {
+    this.postService.addPost(this.postForm.value).subscribe(result => {
+      const newPost = new Post();
+      newPost.id = result._id;
+      newPost.title = result.title;
+      newPost.content =  result.content;
+      this.posts.push(newPost);
+
       this.postFormSubmitted = false;
       this.postForm.reset();
     });
   }
 
   onDelete(postId: string) {
-    this.postService.deletePost(postId).subscribe(data => {
-      console.log(data);
+    this.postService.deletePost(postId).subscribe(response => {
+      if (response.n > 0) this.posts = this.posts.filter(post => post.id !== postId);
     });
   }
 
