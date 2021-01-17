@@ -1,1 +1,23 @@
-<p>posts works!</p>
+<div class="container justify-content-center">
+  <div class="text-center mb-4">
+    <h2>Add Post</h2>
+  </div>
+
+  <form [formGroup]="postForm" (ngSubmit)="addPost()">
+    <mat-card>
+      <mat-card-content>
+        <label for="title">Title:</label>
+        <input formControlName="title" type="text" id="title" class="form-control px-1">
+        <mat-error *ngIf="postFormSubmitted && postF.title.invalid"><span>Title is required</span></mat-error>
+      </mat-card-content>
+
+      <mat-card-content>
+        <label for="content">Content:</label>
+        <textarea formControlName="content" name="content" id="content" cols="30" rows="10" class="form-control px-1"></textarea>
+        <mat-error *ngIf="postFormSubmitted && postF.content.invalid"><span>Content is required</span></mat-error>
+      </mat-card-content>
+
+      <button type="submit" class="btn btn-success"><span>Add Post</span></button>
+    </mat-card>
+  </form>
+</div>

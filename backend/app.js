@@ -1,7 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
+
+const Post = require('../src/app/shared/models/post');
+
+mongoose.connect('mongodb://127.0.0.1:27017/realtor?retryWrites=true').then(() => {
+  console.log('Connected to Mongo Database');
+}).catch(() => {
+  console.log('There was an error connecting to the Mongo Database');
+});
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,9 +23,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/api/posts', (req, res, next) => {
-  res.status(201).json({
-    message: 'Post Added Successfully!'
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
   });
+
+  post.save().then(() => {
+    console.log('Post Added Successfully!');
+  });
+
+  // res.status(201).json({
+  //   message: 'Post Added Successfully!'
+  // });
 });
 
 app.get('/api/posts', (req, res, next) => {

@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { PostsComponent } from './components/posts/posts.component';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { PostsComponent } from './components/posts/posts.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     TextMaskModule,

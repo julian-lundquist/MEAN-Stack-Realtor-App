@@ -1,5 +1,5 @@
-export class Posts {
-  id: bigint;
+export class Post {
+  id: string;
   title: string;
   content: string;
 }
