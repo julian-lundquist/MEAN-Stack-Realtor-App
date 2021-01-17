@@ -11,8 +11,11 @@ import {TextMaskModule} from 'angular2-text-mask';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { PostsComponent } from './components/posts/posts.component';
 import {HttpClientModule} from '@angular/common/http';
+import { PostComponent } from './components/post/post.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -21,7 +24,7 @@ import {HttpClientModule} from '@angular/common/http';
     LoginComponent,
     HomeComponent,
     MortgageCalculatorComponent,
-    PostsComponent
+    PostComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,10 @@ import {HttpClientModule} from '@angular/common/http';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
     MatFormFieldModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

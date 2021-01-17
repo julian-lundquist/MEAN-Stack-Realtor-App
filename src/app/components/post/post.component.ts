@@ -1,20 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import {PostService} from '../../shared/services/post.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {PostService} from '../../shared/services/post.service';
+import {Post} from '../../shared/classes/post';
 
 @Component({
-  selector: 'app-posts',
-  templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css']
+  selector: 'app-post',
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.css']
 })
-export class PostsComponent implements OnInit {
+export class PostComponent implements OnInit {
 
   postForm: FormGroup;
+  posts: Post[] = [];
   postFormSubmitted: boolean = false;
 
   constructor(private postService: PostService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.postService.getPosts().subscribe(data => {
+      this.posts = data.posts;
+      console.log(this.posts);
+    });
+
     this.postForm = this.formBuilder.group({
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required])
@@ -31,8 +38,8 @@ export class PostsComponent implements OnInit {
       return;
     }
 
-    this.postService.addPost(this.postForm.value).subscribe((data) => {
-      console.log(data);
+    this.postService.addPost(this.postForm.value).subscribe(() => {
+      this.postForm.reset();
     });
 
     // console.log(this.postForm.value);

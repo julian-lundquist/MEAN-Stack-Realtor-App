@@ -9,6 +9,10 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
+  getPosts(): Observable<any> {
+    return this.http.get('http://localhost:3000/api/posts');
+  }
+
   addPost(formData: any): Observable<any> {
     return this.http.post('http://localhost:3000/api/posts', formData);
   }
