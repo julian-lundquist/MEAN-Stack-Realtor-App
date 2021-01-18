@@ -1,0 +1,14 @@
+<mat-accordion multi="true" *ngIf="postService.posts.length > 0">
+  <mat-expansion-panel *ngFor="let post of postService.posts" class="text-center">
+    <mat-expansion-panel-header>
+      <span><strong>Title: </strong>{{ post.title }}</span>
+    </mat-expansion-panel-header>
+    <p>{{ post.content }}</p>
+    <mat-action-row>
+      <button mat-button color="primary" [routerLink]="['/post/edit/' + post.id]">EDIT</button>
+      <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div class="text-center info-text mat-body-1" *ngIf="postService.posts.length <= 0">No posts found!</div>

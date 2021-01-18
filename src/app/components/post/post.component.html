@@ -3,41 +3,12 @@
     <h1>Add Post</h1>
   </div>
 
-  <mat-card class="mb-5">
-    <form [formGroup]="postForm" (ngSubmit)="addPost()">
-      <mat-card-content>
-        <label for="title">Title:</label>
-        <input formControlName="title" type="text" id="title" class="form-control px-1">
-        <mat-error *ngIf="postFormSubmitted && postF.title.invalid"><span>Title is required</span></mat-error>
-      </mat-card-content>
-
-      <mat-card-content>
-        <label for="content">Content:</label>
-        <textarea formControlName="content" name="content" id="content" cols="30" rows="10" class="form-control px-1"></textarea>
-        <mat-error *ngIf="postFormSubmitted && postF.content.invalid"><span>Content is required</span></mat-error>
-      </mat-card-content>
-
-      <button type="submit" class="btn btn-success"><span>Add Post</span></button>
-    </form>
-  </mat-card>
+  <app-post-create></app-post-create>
 
   <div class="text-center mb-4">
     <h1>Post List</h1>
   </div>
 
-  <mat-accordion multi="true" *ngIf="posts.length > 0">
-    <mat-expansion-panel *ngFor="let post of posts">
-      <mat-expansion-panel-header>
-        <span><strong>Title: </strong>{{ post.title }}</span>
-      </mat-expansion-panel-header>
-      <strong>Content: </strong>
-      <p>{{ post.content }}</p>
-      <mat-action-row>
-        <button mat-button color="primary">EDIT</button>
-        <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
+  <app-post-list></app-post-list>
 
-  <div class="text-center info-text mat-body-1" *ngIf="posts.length <= 0">No posts found!</div>
 </div>

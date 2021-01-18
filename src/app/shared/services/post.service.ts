@@ -9,6 +9,8 @@ import {Post} from '../classes/post';
 })
 export class PostService {
 
+  posts: Post[] = [];
+
   constructor(private http: HttpClient) { }
 
   getPosts(): Observable<any> {
@@ -24,8 +26,16 @@ export class PostService {
     }));
   }
 
-  addPost(formData: any): Observable<any> {
-    return this.http.post('http://localhost:3000/api/posts', formData);
+  findPost(postId: string): Post {
+    return {...this.posts.find(p => p.id === postId)}
+  }
+
+  addPost(postData: any): Observable<any> {
+    return this.http.post('http://localhost:3000/api/posts', postData);
+  }
+
+  updatePost(post: Post): Observable<any> {
+    return this.http.put('http://localhost:3000/api/posts/' + post.id, post);
   }
 
   deletePost(postId: string): Observable<any> {
