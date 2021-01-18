@@ -26,8 +26,15 @@ export class PostService {
     }));
   }
 
-  findPost(postId: string): Post {
-    return {...this.posts.find(p => p.id === postId)}
+  getPost(postId: string): Observable<any> {
+    return this.http.get<Post>('http://localhost:3000/api/posts/' + postId).pipe(map(post => {
+      return {
+        // @ts-ignore converting _id to just id
+        id: post._id,
+        title: post.title,
+        content: post.content
+      }
+    }));
   }
 
   addPost(postData: any): Observable<any> {

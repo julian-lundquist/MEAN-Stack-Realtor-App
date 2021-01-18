@@ -29,13 +29,15 @@ export class PostCreateComponent implements OnInit {
       if (paramMap.has('postId')) {
         this.updateSpecificPost = true;
         this.postId = paramMap.get('postId');
-        this.post = this.postService.findPost(this.postId);
-        if (this.post.id) {
-          this.postForm.get('title').setValue(this.post.title);
-          this.postForm.get('content').setValue(this.post.content);
-        } else {
-          this.router.navigate(['/posts']);
-        }
+        this.postService.getPost(this.postId).subscribe(post => {
+          this.post = post;
+          if (this.post.id) {
+            this.postForm.get('title').setValue(this.post.title);
+            this.postForm.get('content').setValue(this.post.content);
+          } else {
+            this.router.navigate(['/posts']);
+          }
+        });
       }
     });
   }
