@@ -1,18 +1,24 @@
-<mat-card class="mb-5">
-  <form [formGroup]="postForm" (ngSubmit)="savePost()">
-    <mat-card-content>
-      <label for="title">Title:</label>
-      <input formControlName="title" type="text" id="title" class="form-control px-1">
-      <mat-error *ngIf="postFormSubmitted && postF.title.invalid"><span>Title is required</span></mat-error>
-    </mat-card-content>
+<div [class.container.justify-content-center]="updateSpecificPost == true">
+  <div *ngIf="updateSpecificPost" class="text-center mb-4">
+    <h1>Update Post</h1>
+  </div>
 
-    <mat-card-content>
-      <label for="content">Content:</label>
-      <textarea formControlName="content" name="content" id="content" cols="30" rows="10" class="form-control px-1"></textarea>
-      <mat-error *ngIf="postFormSubmitted && postF.content.invalid"><span>Content is required</span></mat-error>
-    </mat-card-content>
+  <mat-card class="mb-5">
+    <form [formGroup]="postForm" (ngSubmit)="savePost()">
+      <mat-card-content>
+        <label for="title">Title:</label>
+        <input formControlName="title" type="text" id="title" class="form-control px-1">
+        <mat-error *ngIf="postFormSubmitted && postF.title.invalid"><span>Title is required</span></mat-error>
+      </mat-card-content>
 
-    <button type="submit" class="btn btn-success"><span>Save Post</span></button>
-    <button *ngIf="updateSpecificPost == true" type="button" class="btn btn-danger" routerLink="/posts"><span>Cancel</span></button>
-  </form>
-</mat-card>
+      <mat-card-content>
+        <label for="content">Content:</label>
+        <textarea formControlName="content" name="content" id="content" cols="30" rows="10" class="form-control px-1"></textarea>
+        <mat-error *ngIf="postFormSubmitted && postF.content.invalid"><span>Content is required</span></mat-error>
+      </mat-card-content>
+
+      <button type="submit" class="btn btn-success"><span>Save Post</span></button>
+      <button *ngIf="updateSpecificPost" type="button" class="btn btn-danger" routerLink="/posts"><span>Cancel</span></button>
+    </form>
+  </mat-card>
+</div>
