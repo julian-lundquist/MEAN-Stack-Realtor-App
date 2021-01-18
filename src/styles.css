@@ -2,3 +2,16 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.perm-marker-font {
+  font-family: "Permanent Marker";
+}
+
+.revans-font {
+  font-family: "Revans Medium";
+  letter-spacing: 1px;
+}
+
+.reem-font {
+  font-family: "Reem Kufi";
+}

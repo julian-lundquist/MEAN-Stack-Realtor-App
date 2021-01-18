@@ -16,6 +16,7 @@ import { PostComponent } from './components/post/post.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { HeaderComponent } from './components/header/header.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     LoginComponent,
     HomeComponent,
     MortgageCalculatorComponent,
-    PostComponent
+    PostComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
