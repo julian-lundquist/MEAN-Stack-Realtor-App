@@ -56,8 +56,7 @@ export class PostCreateComponent implements OnInit {
 
       this.postService.updatePost(this.post).subscribe(result => {
         if (result.n > 0 && result.nModified > 0) {
-          let oldPost = this.postService.posts.find(post => post.id === this.post.id);
-          let index = this.postService.posts.indexOf(oldPost);
+          let index = this.postService.posts.findIndex(post => post.id === this.post.id);
           this.postService.posts[index] = this.post;
           this.router.navigate(['/posts']);
         }
