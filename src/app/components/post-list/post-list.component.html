@@ -2,7 +2,9 @@
   <h1>Post List</h1>
 </div>
 
-<mat-accordion multi="true" *ngIf="postService.posts.length > 0">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<mat-accordion multi="true" *ngIf="postService.posts.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let post of postService.posts" class="text-center">
     <mat-expansion-panel-header>
       <span><strong>Title: </strong>{{ post.title }}</span>

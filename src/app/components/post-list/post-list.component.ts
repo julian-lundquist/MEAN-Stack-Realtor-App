@@ -9,22 +9,22 @@ import {Post} from '../../shared/classes/post';
 })
 export class PostListComponent implements OnInit {
 
-  updateSpecificPost: boolean = false;
+  isLoading: boolean = false;
 
   constructor(public postService: PostService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.postService.getPosts().subscribe(posts => {
+      this.isLoading = false;
       this.postService.posts = posts;
     });
   }
 
-  updatePost(post: Post) {
-    this.updateSpecificPost = true;
-  }
-
   onDelete(postId: string) {
+    this.isLoading = true;
     this.postService.deletePost(postId).subscribe(response => {
+      this.isLoading = false;
       if (response.n > 0) this.postService.posts = this.postService.posts.filter(post => post.id !== postId);
     });
   }

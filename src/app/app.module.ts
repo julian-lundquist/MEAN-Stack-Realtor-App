@@ -19,6 +19,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { HeaderComponent } from './components/header/header.component';
 import { PostCreateComponent } from './components/post-create/post-create.component';
 import { PostListComponent } from './components/post-list/post-list.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { PostListComponent } from './components/post-list/post-list.component';
     MatButtonModule,
     MatToolbarModule,
     MatFormFieldModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

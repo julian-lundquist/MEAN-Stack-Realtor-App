@@ -12,10 +12,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class PostCreateComponent implements OnInit {
 
   postForm: FormGroup;
-  postFormSubmitted: boolean = false;
-  updateSpecificPost: boolean = false;
   post: Post;
   postId: string;
+  postFormSubmitted: boolean = false;
+  updateSpecificPost: boolean = false;
+  isLoading: boolean = false;
 
   constructor(public postService: PostService, private formBuilder: FormBuilder, public route: ActivatedRoute, public router: Router) { }
 
@@ -29,13 +30,13 @@ export class PostCreateComponent implements OnInit {
       if (paramMap.has('postId')) {
         this.updateSpecificPost = true;
         this.postId = paramMap.get('postId');
+        this.isLoading = true;
         this.postService.getPost(this.postId).subscribe(post => {
+          this.isLoading = false;
           this.post = post;
-          if (this.post.id) {
+          if (this.post?.id) {
             this.postForm.get('title').setValue(this.post.title);
             this.postForm.get('content').setValue(this.post.content);
-          } else {
-            this.router.navigate(['/posts']);
           }
         });
       }
@@ -52,20 +53,23 @@ export class PostCreateComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
     if (this.updateSpecificPost == true) {
       this.post.title = this.postForm.get('title').value;
       this.post.content = this.postForm.get('content').value;
 
       this.postService.updatePost(this.post).subscribe(result => {
+        this.isLoading = false;
         if (result.n > 0 && result.nModified > 0) {
           let index = this.postService.posts.findIndex(post => post.id === this.post.id);
           this.postService.posts[index] = this.post;
-          this.router.navigate(['/posts']);
         }
+        this.router.navigate(['/posts']);
       });
     } else {
       this.postService.addPost(this.postForm.value).subscribe(result => {
         console.log(result);
+        this.isLoading = false;
         const newPost = new Post();
         newPost.id = result._id;
         newPost.title = result.title;

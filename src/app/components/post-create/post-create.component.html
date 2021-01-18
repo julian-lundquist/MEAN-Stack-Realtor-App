@@ -8,7 +8,8 @@
   </div>
 
   <mat-card class="mb-5">
-    <form [formGroup]="postForm" (ngSubmit)="savePost()">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form *ngIf="!isLoading" [formGroup]="postForm" (ngSubmit)="savePost()">
       <mat-card-content>
         <label for="title">Title:</label>
         <input formControlName="title" type="text" id="title" class="form-control px-1">
