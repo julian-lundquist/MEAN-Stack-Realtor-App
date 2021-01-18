@@ -1,6 +1,10 @@
-<div [class.container.justify-content-center]="updateSpecificPost == true">
+<div [class.container.justify-content-center]="updateSpecificPost">
   <div *ngIf="updateSpecificPost" class="text-center mb-4">
     <h1>Update Post</h1>
+  </div>
+
+  <div *ngIf="!updateSpecificPost" class="text-center mb-4">
+    <h1>Add Post</h1>
   </div>
 
   <mat-card class="mb-5">

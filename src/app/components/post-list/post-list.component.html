@@ -1,3 +1,7 @@
+<div class="text-center mb-4">
+  <h1>Post List</h1>
+</div>
+
 <mat-accordion multi="true" *ngIf="postService.posts.length > 0">
   <mat-expansion-panel *ngFor="let post of postService.posts" class="text-center">
     <mat-expansion-panel-header>
