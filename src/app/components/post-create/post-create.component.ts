@@ -25,7 +25,7 @@ export class PostCreateComponent implements OnInit {
     this.postForm = this.formBuilder.group({
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required]),
-      imagePath: new FormControl('')
+      image: new FormControl('')
     });
 
     this.route.paramMap.subscribe(paramMap => {
@@ -39,7 +39,7 @@ export class PostCreateComponent implements OnInit {
           if (this.post?.id) {
             this.postForm.get('title').setValue(this.post.title);
             this.postForm.get('content').setValue(this.post.content);
-            this.postForm.get('imagePath').setValue(this.post.imagePath);
+            this.postForm.get('image').setValue(this.post.imagePath);
             this.imagePreview = this.post.imagePath;
           }
         });
@@ -51,17 +51,14 @@ export class PostCreateComponent implements OnInit {
 
   onImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.postForm.patchValue({imagePath: file});
-    this.postForm.get('imagePath').updateValueAndValidity();
+    this.postForm.patchValue({image: file});
+    this.postForm.get('image').updateValueAndValidity();
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
     reader.onload = () => {
       this.imagePreview = reader.result;
     }
-
-    console.log(this.postForm.get('imagePath').value);
-    console.log(this.postForm);
   }
 
   savePost() {
@@ -72,38 +69,14 @@ export class PostCreateComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
     if (this.updateSpecificPost == true) {
-      this.post.title = this.postForm.get('title').value;
-      this.post.content = this.postForm.get('content').value;
-      this.post.imagePath = this.postForm.get('imagePath').value;
-
-      this.postService.updatePost(this.post).subscribe(result => {
-        this.isLoading = false;
-        if (result.n > 0 && result.nModified > 0) {
-          let index = this.postService.posts.findIndex(post => post.id === this.post.id);
-          this.postService.posts[index] = this.post;
-        }
-
-        this.postFormSubmitted = false;
-        this.postForm.reset();
-        this.router.navigate(['/posts']);
-      });
+      this.postService.updatePost(this.postId, this.postForm.value.title, this.postForm.value.content, this.postForm.value.image);
     } else {
-      this.postService.addPost(this.postForm.value).subscribe(result => {
-        console.log(result);
-        this.isLoading = false;
-        const newPost = new Post();
-        newPost.id = result._id;
-        newPost.title = result.title;
-        newPost.content =  result.content;
-        newPost.imagePath = result.imagePath;
-        this.postService.posts.push(newPost);
-
-        this.imagePreview = null;
-        this.postFormSubmitted = false;
-        this.postForm.reset();
-      });
+      this.postService.addPost(this.postForm.value.title, this.postForm.value.content, this.postForm.value.image);
+      this.imagePreview = null;
     }
+
+    this.postFormSubmitted = false;
+    this.postForm.reset();
   }
 }

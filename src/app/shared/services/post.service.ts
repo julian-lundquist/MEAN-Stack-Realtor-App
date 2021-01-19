@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Post} from '../classes/post';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class PostService {
 
   posts: Post[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getPosts(): Observable<any> {
     return this.http.get<Post[]>('http://localhost:3000/api/posts').pipe(map(posts => {
@@ -39,23 +40,45 @@ export class PostService {
     }));
   }
 
-  addPost(post: any): Observable<any> {
+  addPost(title: string, content: string, image: File | string) {
     const postData = new FormData();
-    postData.append('title', post.title);
-    postData.append('content', post.content);
-    postData.append('image', post.imagePath);
+    postData.append('title', title);
+    postData.append('content', content);
+    postData.append('image', image);
+    console.log(image);
 
-    return this.http.post('http://localhost:3000/api/posts', postData);
+    this.http.post<{_id: string, title: string, content: string, imagePath: string}>('http://localhost:3000/api/posts', postData).subscribe(result => {
+      console.log(result);
+      const newPost = new Post();
+      newPost.id = result._id;
+      newPost.title = result.title;
+      newPost.content =  result.content;
+      newPost.imagePath = result.imagePath;
+      this.posts.push(newPost);
+    });
   }
 
-  updatePost(post: Post): Observable<any> {
-    const postData = new FormData();
-    postData.append('id', post.id);
-    postData.append('title', post.title);
-    postData.append('content', post.content);
-    postData.append('image', post.imagePath);
+  updatePost(id: string, title: string, content: string, image: File | string) {
+    let postData: Post | FormData;
+    if (typeof image === 'object') {
+      postData = new FormData();
+      postData.append('id', id);
+      postData.append('title', title);
+      postData.append('content', content);
+      postData.append('image', image);
+    } else {
+      postData = {
+        id: id,
+        title: title,
+        content: content,
+        imagePath: image
+      }
+    }
 
-    return this.http.put('http://localhost:3000/api/posts/' + post.id, postData);
+    this.http.put('http://localhost:3000/api/posts/' + id, postData).subscribe(result => {
+      console.log(result);
+      this.router.navigate(['/posts']);
+    });
   }
 
   deletePost(postId: string): Observable<any> {
