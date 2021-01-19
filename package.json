@@ -27,6 +27,7 @@
     "bootstrap": "^4.5.3",
     "express": "^4.17.1",
     "mongoose": "^5.11.12",
+    "multer": "^1.4.2",
     "ngx-mask": "^11.1.2",
     "rxjs": "~6.6.0",
     "text-mask-addons": "^3.8.0",

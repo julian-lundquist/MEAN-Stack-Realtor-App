@@ -1,3 +1,9 @@
 mat-spinner {
   margin: auto;
 }
+
+.image-preview {
+  height: auto;
+  max-width: 100%;
+  margin: 1em 0;
+}

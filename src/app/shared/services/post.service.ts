@@ -20,7 +20,8 @@ export class PostService {
           // @ts-ignore converting _id to just id
           id: post._id,
           title: post.title,
-          content: post.content
+          content: post.content,
+          imagePath: post.imagePath
         }
       });
     }));
@@ -32,17 +33,29 @@ export class PostService {
         // @ts-ignore converting _id to just id
         id: post._id,
         title: post.title,
-        content: post.content
+        content: post.content,
+        imagePath: post.imagePath
       }
     }));
   }
 
-  addPost(postData: any): Observable<any> {
+  addPost(post: any): Observable<any> {
+    const postData = new FormData();
+    postData.append('title', post.title);
+    postData.append('content', post.content);
+    postData.append('image', post.imagePath);
+
     return this.http.post('http://localhost:3000/api/posts', postData);
   }
 
   updatePost(post: Post): Observable<any> {
-    return this.http.put('http://localhost:3000/api/posts/' + post.id, post);
+    const postData = new FormData();
+    postData.append('id', post.id);
+    postData.append('title', post.title);
+    postData.append('content', post.content);
+    postData.append('image', post.imagePath);
+
+    return this.http.put('http://localhost:3000/api/posts/' + post.id, postData);
   }
 
   deletePost(postId: string): Observable<any> {

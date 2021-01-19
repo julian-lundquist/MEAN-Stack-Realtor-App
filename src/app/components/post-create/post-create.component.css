@@ -1,3 +1,21 @@
 mat-spinner {
   margin: auto;
 }
+
+input[type="file"] {
+  visibility: hidden;
+}
+
+mat-card-content .image-preview img{
+  background-size: 100%;
+}
+
+.image-preview {
+  height: auto;
+  max-width: 100%;
+  margin: 1em 0;
+}
+
+.image-preview img {
+  height: 100%;
+}

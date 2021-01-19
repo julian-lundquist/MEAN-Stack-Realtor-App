@@ -22,8 +22,22 @@
         <mat-error *ngIf="postFormSubmitted && postF.content.invalid"><span>Content is required</span></mat-error>
       </mat-card-content>
 
-      <button type="submit" class="btn btn-success"><span>Save Post</span></button>
-      <button *ngIf="updateSpecificPost" type="button" class="btn btn-danger" routerLink="/posts"><span>Cancel</span></button>
+      <mat-card-content>
+        <label for="imageUpload">Image Upload:</label>
+        <br>
+        <button mat-raised-button color="primary" type="button" name="imageUpload" id="imageUpload" (click)="filePicker.click()">Browse Files</button>
+        <input type="file" #filePicker (change)="onImageSelected($event)">
+        <div *ngIf="imagePreview !== '' && imagePreview">
+          <img class="image-preview" [src]="imagePreview" [alt]="postForm.value.title">
+        </div>
+        <br>
+        <mat-error *ngIf="postFormSubmitted && postF.imagePath.errors.required"><span>Image Upload is required</span></mat-error>
+      </mat-card-content>
+
+      <div class="mt-4">
+        <button mat-raised-button type="submit" class="btn btn-success"><span>Save Post</span></button>
+        <button *ngIf="updateSpecificPost" mat-raised-button type="button" class="btn btn-danger" routerLink="/posts"><span>Cancel</span></button>
+      </div>
     </form>
   </mat-card>
 </div>
