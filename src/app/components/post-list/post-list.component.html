@@ -18,4 +18,6 @@
   </mat-expansion-panel>
 </mat-accordion>
 
+<mat-paginator [length]="postService.totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="postsPerPageOptions" (page)="onChangedPage($event)"></mat-paginator>
+
 <div class="text-center info-text mat-body-1" *ngIf="postService.posts.length <= 0">No posts found!</div>

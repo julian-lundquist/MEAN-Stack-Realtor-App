@@ -20,6 +20,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { PostCreateComponent } from './components/post-create/post-create.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     MatExpansionModule,
     MatProgressSpinnerModule

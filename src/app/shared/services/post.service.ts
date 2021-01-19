@@ -11,21 +11,31 @@ import {Router} from '@angular/router';
 export class PostService {
 
   posts: Post[] = [];
+  postsPerPage: number = 2;
+  currentPage: number = 1;
+  totalPosts: number;
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getPosts(): Observable<any> {
-    return this.http.get<Post[]>('http://localhost:3000/api/posts').pipe(map(posts => {
-      return posts.map(post => {
-        return {
-          // @ts-ignore converting _id to just id
-          id: post._id,
-          title: post.title,
-          content: post.content,
-          imagePath: post.imagePath
-        }
-      });
-    }));
+  getPosts(postsPerPage: number, currentPage: number) {
+    const queryParams = `?pageSize=${postsPerPage}&currentPage=${currentPage}`
+    return this.http.get<{posts: Post[], totalCount: number}>('http://localhost:3000/api/posts' + queryParams).pipe(map(postData => {
+      return {
+        posts: postData.posts.map(post => {
+          return {
+            // @ts-ignore converting _id to just id
+            id: post._id,
+            title: post.title,
+            content: post.content,
+            imagePath: post.imagePath
+          }
+        }),
+        totalCount: postData.totalCount
+      }
+    })).subscribe(transformedPostData => {
+      this.posts = transformedPostData.posts;
+      this.totalPosts = transformedPostData.totalCount;
+    });
   }
 
   getPost(postId: string): Observable<any> {
@@ -45,16 +55,9 @@ export class PostService {
     postData.append('title', title);
     postData.append('content', content);
     postData.append('image', image);
-    console.log(image);
 
-    this.http.post<{_id: string, title: string, content: string, imagePath: string}>('http://localhost:3000/api/posts', postData).subscribe(result => {
-      console.log(result);
-      const newPost = new Post();
-      newPost.id = result._id;
-      newPost.title = result.title;
-      newPost.content =  result.content;
-      newPost.imagePath = result.imagePath;
-      this.posts.push(newPost);
+    return this.http.post<{_id: string, title: string, content: string, imagePath: string}>('http://localhost:3000/api/posts', postData).subscribe(post => {
+      this.getPosts(this.postsPerPage, this.currentPage);
     });
   }
 

@@ -28,6 +28,43 @@ const storage = multer.diskStorage({
 
 const Post = require('../models/post');
 
+//get all posts
+router.get('', (req, res, next) => {
+  const pageSize = +req.query.pageSize;
+  const currentPage = +req.query.currentPage;
+  const postQuery = Post.find();
+
+  if (pageSize && currentPage) {
+    postQuery
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  }
+
+  let fetchedPosts;
+
+  postQuery.find().then(posts => {
+    fetchedPosts = posts;
+    return Post.count();
+  }).then(count => {
+    res.status(200).json({
+      posts: fetchedPosts,
+      totalCount: count
+    });
+  });
+});
+
+//get specific post
+router.get('/:id', (req, res, next) => {
+  Post.findById(req.params.id).then(post => {
+    if (post) {
+      res.status(200).json(post);
+    } else {
+      res.status(404).json({message: 'Post not found!'});
+    }
+  });
+});
+
+//create a post
 router.post('', multer({storage: storage}).single('image'), (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
   const post = new Post({
@@ -41,6 +78,7 @@ router.post('', multer({storage: storage}).single('image'), (req, res, next) => 
   });
 });
 
+//update an existing post
 router.put('/:id', multer({storage: storage}).single('image'), (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
   const post = req.body;
@@ -52,22 +90,7 @@ router.put('/:id', multer({storage: storage}).single('image'), (req, res, next) 
   });
 });
 
-router.get('', (req, res, next) => {
-  Post.find().then(posts => {
-    res.status(200).json(posts);
-  });
-});
-
-router.get('/:id', (req, res, next) => {
-  Post.findById(req.params.id).then(post => {
-    if (post) {
-      res.status(200).json(post);
-    } else {
-      res.status(404).json({message: 'Post not found!'});
-    }
-  });
-});
-
+//delete a post
 router.delete('/:id', (req, res, next) => {
   Post.deleteOne({ _id: req.params.id }).then(result => {
     res.status(200).json(result);
