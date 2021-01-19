@@ -19,3 +19,7 @@ mat-card-content .image-preview img{
 .image-preview img {
   height: 100%;
 }
+
+div[class="mt-4"] button {
+  margin-right: 1em;
+}

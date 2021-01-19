@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {PostService} from '../../shared/services/post.service';
-import {Post} from '../../shared/classes/post';
+import {PostService} from '../../../shared/services/post.service';
+import {Post} from '../../../shared/classes/post';
 import {PageEvent} from '@angular/material/paginator';
 
 @Component({

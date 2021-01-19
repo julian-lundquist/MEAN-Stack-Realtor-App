@@ -1,0 +1,46 @@
+<div class="container justify-content-center">
+  <div class="atom-font text-large text-center mb-4">
+    <span>Sign Up</span>
+  </div>
+
+  <mat-card class="mb-5 bg-light">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form *ngIf="!isLoading" [formGroup]="signupForm" (ngSubmit)="signupSubmit()">
+
+      <mat-form-field>
+<!--        <label for="firstName">First Name:</label>-->
+        <input matInput formControlName="firstName" type="text" name="firstName" id="firstName" class="px-1" [placeholder]="'First Name'">
+        <mat-error *ngIf="signupFormSubmitted && signupF.firstName.invalid"><span>First Name is required</span></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+<!--        <label for="lastName">Last Name:</label>-->
+        <input matInput formControlName="lastName" type="text" name="lastName" id="lastName" class="px-1" [placeholder]="'Last Name'">
+        <mat-error *ngIf="signupFormSubmitted && signupF.lastName.invalid"><span>Last Name is required</span></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+<!--        <label for="phoneNum">Phone Number:</label>-->
+        <input matInput formControlName="phoneNum" type="text" name="phoneNum" id="phoneNum" class="px-1" [placeholder]="'Phone Number'">
+        <mat-error *ngIf="signupFormSubmitted && signupF.phoneNum.invalid"><span>Phone Number is required</span></mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+<!--        <label for="email">Email:</label>-->
+        <input matInput formControlName="email" type="text" name="email" id="email" class="px-1" [placeholder]="'Email'">
+        <mat-error *ngIf="signupFormSubmitted && signupF.email.invalid"><span>Email is required</span></mat-error>
+        <mat-error *ngIf="signupFormSubmitted && signupF.email.errors.pattern">Email must be a valid email address</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+<!--        <label for="password">Password:</label>-->
+        <input matInput formControlName="password" type="password" name="password" id="password" class="px-1" [placeholder]="'Password'">
+        <mat-error *ngIf="signupFormSubmitted && signupF.password.invalid"><span>Password is required</span></mat-error>
+      </mat-form-field>
+
+      <div class="mt-4">
+        <button mat-raised-button type="submit" class="btn btn-success"><span>Sign Up</span></button>
+      </div>
+    </form>
+  </mat-card>
+</div>

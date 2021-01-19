@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './components/auth/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { MortgageCalculatorComponent } from './components/mortgage-calculator/mortgage-calculator.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -17,10 +17,12 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HeaderComponent } from './components/header/header.component';
-import { PostCreateComponent } from './components/post-create/post-create.component';
-import { PostListComponent } from './components/post-list/post-list.component';
+import { PostCreateComponent } from './components/post/post-create/post-create.component';
+import { PostListComponent } from './components/post/post-list/post-list.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { SignupComponent } from './components/auth/signup/signup.component';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     PostComponent,
     HeaderComponent,
     PostCreateComponent,
-    PostListComponent
+    PostListComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatCardModule,
+    MatInputModule,
     MatButtonModule,
     MatToolbarModule,
     MatPaginatorModule,

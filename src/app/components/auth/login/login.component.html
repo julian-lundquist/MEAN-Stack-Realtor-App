@@ -1,0 +1,28 @@
+<div class="container justify-content-center">
+  <div class="atom-font text-large text-center mb-4">
+    <span>Login</span>
+  </div>
+
+  <mat-card class="mb-5 bg-light">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form *ngIf="!isLoading" [formGroup]="loginForm" (ngSubmit)="doLogin()">
+      <mat-form-field>
+<!--        <label for="email">Email:</label>-->
+        <input matInput formControlName="email" type="email" name="email" id="email" class="px-1" [placeholder]="'Email'">
+        <mat-error *ngIf="loginFormSubmitted && loginF.email.invalid"><span>Email is required</span></mat-error>
+        <mat-error *ngIf="loginFormSubmitted && loginF.email.errors.pattern">Email must be a valid email address</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+<!--        <label for="password">Password:</label>-->
+        <input matInput formControlName="password" type="password" name="password" id="password" class="px-1" [placeholder]="'Password'">
+        <mat-error *ngIf="loginFormSubmitted && loginF.password.invalid"><span>Password is required</span></mat-error>
+      </mat-form-field>
+
+      <div class="mt-4">
+        <button mat-raised-button type="submit" class="btn btn-success"><span>Login</span></button>
+        <button mat-raised-button type="button" class="btn btn-primary" routerLink="/signup"><span>Sign Up</span></button>
+      </div>
+    </form>
+  </mat-card>
+</div>

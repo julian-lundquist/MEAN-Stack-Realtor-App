@@ -3,6 +3,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.atom-font {
+  font-family: "a Atmospheric";
+}
+
 .perm-marker-font {
   font-family: "Permanent Marker";
 }
@@ -14,4 +18,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .reem-font {
   font-family: "Reem Kufi";
+}
+
+.text-small {
+  font-size: 125%;
+  padding: 0.6em;
+}
+
+.text-medium {
+  font-size: 200%;
+  padding: 0.6em;
+}
+
+.text-large {
+  font-size: 300%;
+  padding: 0.6em;
+}
+
+.text-xlarge {
+  font-size: 450%;
+  padding: 0.6em;
 }

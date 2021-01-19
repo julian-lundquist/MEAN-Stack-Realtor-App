@@ -1,6 +1,6 @@
 <div class="container justify-content-center">
-  <div class="text-center mb-4">
-    <h2>Advanced Mortgage Calculator</h2>
+  <div class="atom-font text-medium text-center mb-4">
+    <span>Mortgage Calculator</span>
   </div>
 
   <mat-card>
@@ -29,8 +29,8 @@
           <button type="submit" class="btn btn-success"><span>Calculate Mortgage</span></button>
         </div>
         <div class="col-auto" *ngIf="totalPayment && monthlyPayment">
-          <h2>Monthly Payment:<span class="text-danger"> ${{ this.monthlyPayment }}</span></h2>
-          <h2>Total Payment:<span class="text-danger"> ${{ this.totalPayment }}</span></h2>
+          <h2>Monthly Payment:<span class="text-success"> ${{ this.monthlyPayment }}</span></h2>
+          <h2>Total Payment:<span class="text-success"> ${{ this.totalPayment }}</span></h2>
         </div>
         <div class="col-auto" *ngIf="totalPayment && monthlyPayment">
           <h2>Loan Amount:<span class="text-primary"> ${{ this.loanAmount }}</span></h2>

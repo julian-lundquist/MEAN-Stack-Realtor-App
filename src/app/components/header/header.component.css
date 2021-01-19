@@ -22,9 +22,13 @@ a {
 }
 
 .toolbar-link:hover {
-  color: goldenrod;
+  color: aquamarine;
 }
 
 .active-link {
   color: gold;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
 }

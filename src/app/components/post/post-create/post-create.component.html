@@ -1,13 +1,13 @@
 <div [class.container.justify-content-center]="updateSpecificPost">
-  <div *ngIf="updateSpecificPost" class="text-center mb-4">
-    <h1>Update Post</h1>
+  <div *ngIf="updateSpecificPost" class="atom-font text-medium text-center mb-4">
+    <span>Update Post</span>
   </div>
 
-  <div *ngIf="!updateSpecificPost" class="text-center mb-4">
-    <h1>Add Post</h1>
+  <div *ngIf="!updateSpecificPost" class="atom-font text-medium text-center mb-4">
+    <span>Add Post</span>
   </div>
 
-  <mat-card class="mb-5">
+  <mat-card class="mb-5 bg-light">
     <mat-spinner *ngIf="isLoading"></mat-spinner>
     <form *ngIf="!isLoading" [formGroup]="postForm" (ngSubmit)="savePost()">
       <mat-card-content>
