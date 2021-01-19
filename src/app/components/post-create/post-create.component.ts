@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {PostService} from '../../shared/services/post.service';
 import {Post} from '../../shared/classes/post';
 import {ActivatedRoute, Router} from '@angular/router';
+import {mimeType} from './mime-type.validator';
 
 @Component({
   selector: 'app-post-create',
@@ -25,7 +26,7 @@ export class PostCreateComponent implements OnInit {
     this.postForm = this.formBuilder.group({
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required]),
-      image: new FormControl('')
+      image: new FormControl('',[Validators.required])
     });
 
     this.route.paramMap.subscribe(paramMap => {
@@ -41,6 +42,8 @@ export class PostCreateComponent implements OnInit {
             this.postForm.get('content').setValue(this.post.content);
             this.postForm.get('image').setValue(this.post.imagePath);
             this.imagePreview = this.post.imagePath;
+          } else {
+            this.imagePreview = null;
           }
         });
       }

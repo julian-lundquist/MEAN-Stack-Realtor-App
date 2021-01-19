@@ -42,6 +42,7 @@ export const mimeType = (
         if (isValid) {
           observer.next(null);
         } else {
+          console.log('WRONG FILE TYPE');
           observer.next({ invalidMimeType: true });
         }
         observer.complete();
