@@ -18,6 +18,6 @@
   </mat-expansion-panel>
 </mat-accordion>
 
-<mat-paginator [length]="postService.totalPosts" [pageSize]="postService.postsPerPage" [pageSizeOptions]="postsPerPageOptions" (page)="onChangedPage($event)"></mat-paginator>
+<mat-paginator *ngIf="postService.posts.length > 0 && !isLoading" [length]="postService.totalPosts" [pageSize]="postService.postsPerPage" [pageSizeOptions]="postsPerPageOptions" (page)="onChangedPage($event)"></mat-paginator>
 
-<div class="text-center info-text mat-body-1" *ngIf="postService.posts.length <= 0">No posts found!</div>
+<div class="text-center info-text mat-body-1" *ngIf="postService.posts.length <= 0 && !isLoading">No posts found!</div>
