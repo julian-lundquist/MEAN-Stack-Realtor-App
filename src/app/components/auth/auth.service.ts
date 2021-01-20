@@ -9,6 +9,8 @@ import {Observable} from 'rxjs';
 })
 export class AuthService {
 
+  jwt: any;
+
   constructor(private http: HttpClient, private router: Router) { }
 
   createUser(firstName: string, lastName: string, phoneNum: string, email: string, password: string): Observable<any> {
@@ -19,6 +21,13 @@ export class AuthService {
       email: email,
       password: password
     }
-    return this.http.post('http://localhost:3000/api/users/create', user);
+    return this.http.post('http://localhost:3000/api/user/create', user);
+  }
+
+  login(email: string, password: string) {
+    this.http.post<{token: string}>('http://localhost:3000/api/user/login', {email: email, password: password}).subscribe(result => {
+      console.log(result);
+      this.jwt = result.token;
+    });
   }
 }

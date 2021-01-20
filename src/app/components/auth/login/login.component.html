@@ -10,7 +10,7 @@
 <!--        <label for="email">Email:</label>-->
         <input matInput formControlName="email" type="email" name="email" id="email" class="px-1" [placeholder]="'Email'">
         <mat-error *ngIf="loginFormSubmitted && loginF.email.invalid"><span>Email is required</span></mat-error>
-        <mat-error *ngIf="loginFormSubmitted && loginF.email.errors.pattern">Email must be a valid email address</mat-error>
+        <mat-error *ngIf="loginFormSubmitted && loginF.email.errors?.pattern">Email must be a valid email address</mat-error>
       </mat-form-field>
 
       <mat-form-field>
