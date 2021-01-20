@@ -1,5 +1,15 @@
+mat-card {
+  margin: auto;
+  width: 50%;
+}
+
 mat-form-field {
   width: 100%;
+  margin-bottom: 0.4em;
+}
+
+mat-form-field input {
+  size: 3em;
 }
 
 div[class="mt-4"] button {

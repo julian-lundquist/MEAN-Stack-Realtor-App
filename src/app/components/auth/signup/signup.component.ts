@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
+import {User} from '../../../shared/classes/user';
 
 @Component({
   selector: 'app-signup',
@@ -9,17 +12,19 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
-  signupFormSubmitted: boolean = false;
   isLoading: boolean = false;
+  signupFormSubmitted: boolean = false;
+  emailNotUnique: boolean = false;
+  emailMessageError: string;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       phoneNum: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]),
+      email: new FormControl('', {validators: [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]}),
       password: new FormControl('', [Validators.required]),
     });
   }
@@ -32,6 +37,33 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.invalid) {
       return;
     }
+
+    const oldUser = {
+      firstName: this.signupForm.value.firstName,
+      lastName: this.signupForm.value.lastName,
+      phoneNum: this.signupForm.value.phoneNum,
+      email: this.signupForm.value.email
+    }
+
+    this.authService.createUser(
+      this.signupForm.value.firstName,
+      this.signupForm.value.lastName,
+      this.signupForm.value.phoneNum,
+      this.signupForm.value.email,
+      this.signupForm.value.password
+    ).subscribe(response => {
+      if (response.message?.toString().includes(oldUser.email)) {
+        this.emailNotUnique = true;
+        this.emailMessageError = response.message?.text;
+        this.signupFormSubmitted = false;
+      } else {
+        this.emailNotUnique = false;
+        this.emailMessageError = null;
+        this.signupFormSubmitted = false;
+        this.router.navigate(['/login']);
+      }
+    });
+    this.signupForm.reset();
   }
 
 }

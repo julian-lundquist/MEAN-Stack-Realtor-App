@@ -28,8 +28,9 @@
       <mat-form-field>
 <!--        <label for="email">Email:</label>-->
         <input matInput formControlName="email" type="text" name="email" id="email" class="px-1" [placeholder]="'Email'">
-        <mat-error *ngIf="signupFormSubmitted && signupF.email.invalid"><span>Email is required</span></mat-error>
-        <mat-error *ngIf="signupFormSubmitted && signupF.email.errors.pattern">Email must be a valid email address</mat-error>
+        <mat-error *ngIf="signupFormSubmitted && !emailNotUnique && signupF.email.errors?.required"><span>Email is required</span></mat-error>
+        <mat-error *ngIf="signupFormSubmitted && signupF.email.errors?.pattern">Email must be a valid email address</mat-error>
+        <mat-error *ngIf="emailNotUnique && signupF.email.errors?.required">Email already exists</mat-error>
       </mat-form-field>
 
       <mat-form-field>
