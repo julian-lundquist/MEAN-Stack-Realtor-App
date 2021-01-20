@@ -50,14 +50,32 @@ export class AuthService {
       if (this.token) {
         const expiresInDurationSeconds = response.expiresIn;
         console.log(expiresInDurationSeconds);
-        this.tokenTimer = setTimeout(() => {
-          this.logout();
-        }, expiresInDurationSeconds * 1000);
+        this.setAuthTimer(expiresInDurationSeconds);
         this.isAuthenticated = true;
         this.authStatusListener.next(true);
+        const now = new Date();
+        const expirationDate = new Date(now.getTime() + (expiresInDurationSeconds * 1000));
+        this.saveAuthData(this.token, expirationDate);
+        console.log(JSON.parse(localStorage.getItem('jwt')));
         this.router.navigate(['/']);
       }
     });
+  }
+
+  authAuthUser() {
+    const authInfo = this.getAuthData();
+    if (!authInfo) {
+      return;
+    }
+    const now = new Date();
+    const expiresIn = authInfo.expirationDate.getTime() - now.getTime();
+    console.log(authInfo, expiresIn);
+    if (expiresIn > 0) {
+      this.token = authInfo.token;
+      this.isAuthenticated = true;
+      this.setAuthTimer(expiresIn / 1000);
+      this.authStatusListener.next(true);
+    }
   }
 
   logout() {
@@ -65,6 +83,32 @@ export class AuthService {
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
+    this.clearAuthData();
     this.router.navigate(['/']);
+  }
+
+  private setAuthTimer(expiresInDurationSeconds: number) {
+    console.log(expiresInDurationSeconds + ' seconds were set');
+    this.tokenTimer = setTimeout(() => {
+      this.logout();
+    }, expiresInDurationSeconds * 1000);
+  }
+
+  private saveAuthData(token: string, expirationDate: Date) {
+    localStorage.setItem('jwt', JSON.stringify({token: token, expirationDate: expirationDate}));
+  }
+
+  private clearAuthData() {
+    localStorage.removeItem('jwt');
+  }
+
+  private getAuthData() {
+    const jwt = JSON.parse(localStorage.getItem('jwt'));
+    if (jwt) {
+      jwt.expirationDate = new Date(jwt.expirationDate);
+      return jwt;
+    } else {
+      return;
+    }
   }
 }
