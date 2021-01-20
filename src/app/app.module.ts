@@ -11,7 +11,7 @@ import {TextMaskModule} from 'angular2-text-mask';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { PostComponent } from './components/post/post.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
@@ -23,6 +23,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import {MatInputModule} from '@angular/material/input';
+import {AuthInterceptor} from './components/auth/auth-interceptor';
 
 
 @NgModule({
@@ -54,7 +55,7 @@ import {MatInputModule} from '@angular/material/input';
     MatExpansionModule,
     MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
