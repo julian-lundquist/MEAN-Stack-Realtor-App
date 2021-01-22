@@ -27,7 +27,8 @@ export class PostService {
             id: post._id,
             title: post.title,
             content: post.content,
-            imagePath: post.imagePath
+            imagePath: post.imagePath,
+            creatorId: post.creatorId
           }
         }),
         totalCount: postData.totalCount
@@ -45,7 +46,8 @@ export class PostService {
         id: post._id,
         title: post.title,
         content: post.content,
-        imagePath: post.imagePath
+        imagePath: post.imagePath,
+        creatorId: post.creatorId
       }
     }));
   }
