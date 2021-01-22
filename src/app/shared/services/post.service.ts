@@ -60,6 +60,7 @@ export class PostService {
 
     return this.http.post<{_id: string, title: string, content: string, imagePath: string}>('http://localhost:3000/api/posts', postData).subscribe(post => {
       this.getPosts(this.postsPerPage, this.currentPage);
+      this.router.navigate(['/posts']);
     });
   }
 
