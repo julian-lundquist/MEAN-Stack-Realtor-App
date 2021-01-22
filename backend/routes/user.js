@@ -25,6 +25,7 @@ router.post('/create', (req,res,next) => {
   });
 });
 
+//Authenticate User via login
 router.post('/login', (req, res, next) => {
   let fetchedUser;
   User.find({email: req.body.email}).then(userData => {

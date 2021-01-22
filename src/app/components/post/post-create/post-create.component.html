@@ -26,12 +26,12 @@
         <label for="imageUpload">Image Upload:</label>
         <br>
         <button mat-raised-button color="primary" type="button" name="imageUpload" id="imageUpload" (click)="filePicker.click()">Browse Files</button>
-        <input type="file" accept="image/*" #filePicker (change)="onImageSelected($event)">
+        <input id="imageFilePicker" type="file" accept="image/*" #filePicker (change)="onImageSelected($event)">
         <div *ngIf="imagePreview !== '' && imagePreview">
           <img class="image-preview" [src]="imagePreview" [alt]="postForm.value.title">
         </div>
         <br>
-        <mat-error *ngIf="postFormSubmitted && postF.image.errors.required"><span>Image Upload is required</span></mat-error>
+        <mat-error *ngIf="postFormSubmitted && postF.image.errors?.required"><span>Image Upload is required</span></mat-error>
       </mat-card-content>
 
       <div class="mt-4">

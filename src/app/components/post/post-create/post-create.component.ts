@@ -76,6 +76,7 @@ export class PostCreateComponent implements OnInit {
       this.postService.updatePost(this.postId, this.postForm.value.title, this.postForm.value.content, this.postForm.value.image);
     } else {
       this.postService.addPost(this.postForm.value.title, this.postForm.value.content, this.postForm.value.image);
+      document.getElementById("imageFilePicker").innerText = null;
       this.imagePreview = null;
     }
 
