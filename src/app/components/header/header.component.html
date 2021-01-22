@@ -8,6 +8,10 @@
       <a mat-raised-button color="primary" class="toolbar-link toolbar-text-size revans-font" routerLink="/posts" routerLinkActive="active-link">Posts</a>
     </li>
 
+    <li *ngIf="userIsAuthenticated" class="">
+      <a mat-raised-button color="primary" class="toolbar-link toolbar-text-size revans-font" routerLink="/post/add" routerLinkActive="active-link">Add Post</a>
+    </li>
+
     <li class="">
       <a mat-raised-button color="primary" class="toolbar-link toolbar-text-size revans-font" routerLink="/calculator" routerLinkActive="active-link">Mortgage Calculator</a>
     </li>

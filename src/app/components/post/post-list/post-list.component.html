@@ -1,23 +1,25 @@
-<div class="atom-font text-medium text-center mb-4">
-  <span>Post List</span>
+<div class="container justify-content-center">
+  <div class="atom-font text-medium text-center mb-4">
+    <span>Post List</span>
+  </div>
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <mat-accordion multi="true" *ngIf="postService.posts.length > 0 && !isLoading">
+    <mat-expansion-panel *ngFor="let post of postService.posts" class="text-center bg-light">
+      <mat-expansion-panel-header>
+        <span><strong>Title: </strong>{{ post.title }}</span>
+      </mat-expansion-panel-header>
+      <p>{{ post.content }}</p>
+      <img class="image-preview" [src]="post.imagePath" [alt]="post.title">
+      <mat-action-row *ngIf="userIsAuthenticated">
+        <button mat-button color="primary" [routerLink]="['/post/edit/' + post.id]">EDIT</button>
+        <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-paginator *ngIf="postService.posts.length > 0 && !isLoading" [length]="postService.totalPosts" [pageSize]="postService.postsPerPage" [pageSizeOptions]="postsPerPageOptions" (page)="onChangedPage($event)"></mat-paginator>
+
+  <div class="text-center info-text mat-body-1" *ngIf="postService.posts.length <= 0 && !isLoading">No posts found!</div>
 </div>
-
-<mat-spinner *ngIf="isLoading"></mat-spinner>
-
-<mat-accordion multi="true" *ngIf="postService.posts.length > 0 && !isLoading">
-  <mat-expansion-panel *ngFor="let post of postService.posts" class="text-center bg-light">
-    <mat-expansion-panel-header>
-      <span><strong>Title: </strong>{{ post.title }}</span>
-    </mat-expansion-panel-header>
-    <p>{{ post.content }}</p>
-    <img class="image-preview" [src]="post.imagePath" [alt]="post.title">
-    <mat-action-row *ngIf="userIsAuthenticated">
-      <button mat-button color="primary" [routerLink]="['/post/edit/' + post.id]">EDIT</button>
-      <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
-
-<mat-paginator *ngIf="postService.posts.length > 0 && !isLoading" [length]="postService.totalPosts" [pageSize]="postService.postsPerPage" [pageSizeOptions]="postsPerPageOptions" (page)="onChangedPage($event)"></mat-paginator>
-
-<div class="text-center info-text mat-body-1" *ngIf="postService.posts.length <= 0 && !isLoading">No posts found!</div>

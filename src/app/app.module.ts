@@ -12,7 +12,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import { PostComponent } from './components/post/post.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -32,7 +31,6 @@ import {AuthInterceptor} from './components/auth/auth-interceptor';
     LoginComponent,
     HomeComponent,
     MortgageCalculatorComponent,
-    PostComponent,
     HeaderComponent,
     PostCreateComponent,
     PostListComponent,
