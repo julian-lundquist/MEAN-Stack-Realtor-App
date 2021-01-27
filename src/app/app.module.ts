@@ -23,6 +23,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import {MatInputModule} from '@angular/material/input';
 import {AuthInterceptor} from './components/auth/auth-interceptor';
+import { GuideInfoComponent } from './components/guide-info/guide-info.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {AuthInterceptor} from './components/auth/auth-interceptor';
     HeaderComponent,
     PostCreateComponent,
     PostListComponent,
-    SignupComponent
+    SignupComponent,
+    GuideInfoComponent
   ],
   imports: [
     BrowserModule,
