@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {User} from '../../../shared/classes/user';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
 
   signupForm: FormGroup;
   isLoading: boolean = false;
   signupFormSubmitted: boolean = false;
   emailNotUnique: boolean = false;
   emailMessageError: string;
+  private authStatusSub: Subscription;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) { }
 
@@ -27,6 +29,14 @@ export class SignupComponent implements OnInit {
       email: new FormControl('', {validators: [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]}),
       password: new FormControl('', [Validators.required]),
     });
+
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(authStatus => {
+        this.isLoading = false;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.authStatusSub.unsubscribe();
   }
 
   get signupF() { return this.signupForm.controls; }
@@ -62,7 +72,10 @@ export class SignupComponent implements OnInit {
         this.signupFormSubmitted = false;
         this.router.navigate(['/login']);
       }
+    }, error => {
+      this.isLoading = false;
     });
+
     this.signupForm.reset();
   }
 

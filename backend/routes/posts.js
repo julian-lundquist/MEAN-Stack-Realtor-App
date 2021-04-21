@@ -85,7 +85,7 @@ router.post('', checkAuth, multer({storage: storage}).single('image'), (req, res
 router.put('/:id', checkAuth, multer({storage: storage}).single('image'), (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
   const post = req.body;
-  console.log(post)
+
   if (post.imagePath != null && post.imagePath != '') {
     post.imagePath = url + '/images/' + req.file.filename;
   }

@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {PostService} from '../../../shared/services/post.service';
 import {Post} from '../../../shared/classes/post';
 import {ActivatedRoute, Router} from '@angular/router';
 import {mimeType} from './mime-type.validator';
+import {Subscription} from 'rxjs';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
   styleUrls: ['./post-create.component.css']
 })
-export class PostCreateComponent implements OnInit {
+export class PostCreateComponent implements OnInit, OnDestroy {
 
   postForm: FormGroup;
   post: Post;
@@ -19,8 +21,9 @@ export class PostCreateComponent implements OnInit {
   postFormSubmitted: boolean = false;
   updateSpecificPost: boolean = false;
   isLoading: boolean = false;
+  private authStatusSub: Subscription;
 
-  constructor(public postService: PostService, private formBuilder: FormBuilder, public route: ActivatedRoute, public router: Router) { }
+  constructor(public postService: PostService, private formBuilder: FormBuilder, private authService: AuthService, public route: ActivatedRoute, public router: Router) { }
 
   ngOnInit(): void {
     this.postForm = this.formBuilder.group({
@@ -33,7 +36,6 @@ export class PostCreateComponent implements OnInit {
       if (paramMap.has('postId')) {
         this.updateSpecificPost = true;
         this.postId = paramMap.get('postId');
-        this.isLoading = true;
         this.postService.getPost(this.postId).subscribe(post => {
           this.isLoading = false;
           this.post = post;
@@ -48,6 +50,14 @@ export class PostCreateComponent implements OnInit {
         });
       }
     });
+
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(authStatus => {
+      this.isLoading = false;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.authStatusSub.unsubscribe();
   }
 
   get postF() { return this.postForm.controls; }
@@ -73,10 +83,12 @@ export class PostCreateComponent implements OnInit {
     }
 
     if (this.updateSpecificPost == true) {
+      this.isLoading = true;
       this.postService.updatePost(this.postId, this.postForm.value.title, this.postForm.value.content, this.postForm.value.image);
       document.getElementById("imageFilePicker").innerText = null;
       this.imagePreview = null;
     } else {
+      this.isLoading = true;
       this.postService.addPost(this.postForm.value.title, this.postForm.value.content, this.postForm.value.image);
       document.getElementById("imageFilePicker").innerText = null;
       this.imagePreview = null;
