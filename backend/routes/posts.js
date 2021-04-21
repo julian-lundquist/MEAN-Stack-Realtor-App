@@ -85,7 +85,10 @@ router.post('', checkAuth, multer({storage: storage}).single('image'), (req, res
 router.put('/:id', checkAuth, multer({storage: storage}).single('image'), (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
   const post = req.body;
-  post.imagePath = url + '/images/' + req.file.filename;
+  console.log(post)
+  if (post.imagePath != null && post.imagePath != '') {
+    post.imagePath = url + '/images/' + req.file.filename;
+  }
 
   Post.updateOne({ _id: req.params.id, creatorId: req.userData.userId }, post).then(result => {
     if (result.nModified > 0) {
